@@ -1,38 +1,54 @@
-.App {
+body {
+  background-color: lavender;
+}
+
+.calendar {
+  margin: auto;
+  max-width: 1600px;
+  min-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.week {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1em;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 14%;
+  background-color: white;
+}
+
+.event {
+  border: 1px solid;
+  padding: 0.3em;
+  flex-basis: 0em;
+}
+
+.eventDescription {
+  font-weight: bold;
+}
+
+.datestamp {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 140%;
+  background-color: rgba(175, 157, 214, 0.52);
+  padding: 0.2em;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.timestamp {
+  background-color: rgba(173, 216, 230, 0.472);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.title {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

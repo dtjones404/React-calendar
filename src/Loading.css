@@ -1,0 +1,33 @@
+.loading {
+  text-align: center;
+}
+
+.loading-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .loading-logo {
+    animation: loading-logo-spin infinite 20s linear;
+  }
+}
+
+.loading-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(12px + 2vmin);
+  color: rgb(119, 29, 119);
+}
+
+@keyframes loading-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
