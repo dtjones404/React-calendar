@@ -52,3 +52,11 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.day.active {
+  border: 2px solid rgb(38, 0, 255);
+}
+
+.event.active {
+  border: 2px solid rgb(255, 0, 0);
+}

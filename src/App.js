@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import useFetch from 'react-fetch-hook';
 import Loading from './Loading';
 import './App.css';
@@ -23,50 +23,77 @@ function App() {
 }
 
 function Calendar({ weekData }) {
+  const [currDate, setDate] = useState(
+    new Date(new Date().getTime() + 24 * 1000 * 3600)
+  );
+  useEffect(() => {
+    const timer = setInterval(() => {
+      // Creates an interval which will update the current data every minute
+      // This will trigger a rerender every component that uses the useDate hook.
+      setDate(new Date(new Date().getTime() + 24 * 1000 * 3600));
+    }, 60 * 1000);
+    return () => {
+      clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
+    };
+  }, []);
   const weeks = [];
+  console.log(currDate);
   for (const week of weekData) {
-    weeks.push(<Week data={week} />);
+    weeks.push(<Week weekData={week} currDate={currDate} />);
   }
   return <div className="calendar">{weeks}</div>;
 }
 
-function Week({ data }) {
+function Week({ weekData, currDate }) {
   const days = [];
-  for (const day of data) {
-    days.push(<Day data={day} />);
+  for (const day of weekData) {
+    days.push(<Day dayData={day} currDate={currDate} />);
   }
   return <div className="week">{days}</div>;
 }
 
-function Day({ data: [date, eventData] }) {
+function Day({ dayData: [dayDate, eventData], currDate }) {
   const getPrettyDatestamp = (date) => {
     return String(date).split(`${date.getFullYear()}`)[0];
   };
+
+  const isActive = () => {
+    return (
+      dayDate.getTime() <= currDate.getTime() &&
+      currDate.getTime() <= dayDate.getTime() + 1000 * 3600 * 24
+    );
+  };
   const events = [];
   for (const event of eventData) {
-    events.push(<Event data={event} />);
+    events.push(<Event eventData={event} currDate={currDate} />);
   }
+  const dayClasses = `day${isActive() ? ' active' : ''}`;
   return (
-    <div className="day">
-      <div className="datestamp">{getPrettyDatestamp(date)}</div>
+    <div className={dayClasses}>
+      <div className="datestamp">{getPrettyDatestamp(dayDate)}</div>
       {events}
     </div>
   );
 }
 
-function Event({ data }) {
+function Event({ eventData, currDate }) {
   const getTimeDifference = (date1, date2) => {
     const ms = date2.getTime() - date1.getTime();
     return Math.round((ms / 1000 / 60 / 60) * 100) / 100;
   };
+  const isCurrent = () => {
+    const currTime = currDate.getTime();
+    return startTime <= currTime && currTime <= endTime;
+  };
 
-  const startTime = new Date(data.start.dateTime);
-  const endTime = new Date(data.end.dateTime);
+  const startTime = new Date(eventData.start.dateTime);
+  const endTime = new Date(eventData.end.dateTime);
   const timeDiff = getTimeDifference(startTime, endTime);
-  const description = data.summary;
+  const description = eventData.summary;
+  const eventClasses = `event${isCurrent() ? ' active' : ''}`;
 
   return (
-    <div className="event" style={{ flexGrow: timeDiff }}>
+    <div className={eventClasses} style={{ flexGrow: timeDiff }}>
       <EventTime startTime={startTime} endTime={endTime} />
       <EventDesc description={description} />
     </div>
