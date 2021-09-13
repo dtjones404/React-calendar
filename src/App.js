@@ -123,7 +123,6 @@ function splitScheduleByWeek(schedule) {
     const newTime = origTime + offset * 24 * 60 * 60 * 1000;
     return new Date(newTime);
   }
-
   const res = [];
   let data = Object.entries(schedule).map(([k, v]) => [new Date(k), v]);
   const firstDay = getDateOffset(data[0][0], -data[0][0].getDay());
@@ -134,8 +133,8 @@ function splitScheduleByWeek(schedule) {
   let nextDay = firstDay;
   let j = 0;
   let newWeek = [];
-  while (j < data.length && nextDay <= lastDay) {
-    if (+nextDay === +data[j][0]) {
+  while (j < data.length || nextDay <= lastDay) {
+    if (j < data.length && +nextDay === +data[j][0]) {
       newWeek.push(data[j]);
       j++;
     } else {
