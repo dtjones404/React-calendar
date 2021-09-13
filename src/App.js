@@ -88,13 +88,14 @@ function Event({ eventData, currDate }) {
   const endTime = new Date(eventData.end.dateTime);
   const timeDiff = getTimeDifference(startTime, endTime);
   const description = eventData.summary;
+  const location = eventData.location;
   const eventClasses = `event${isCurrent() ? ' active' : ''}`;
 
   return (
-    <div className={eventClasses} style={{ flexGrow: timeDiff }}>
+    <a href={location} className={eventClasses} style={{ flexGrow: timeDiff }}>
       <EventTime startTime={startTime} endTime={endTime} />
       <EventDesc description={description} />
-    </div>
+    </a>
   );
 }
 
@@ -118,6 +119,7 @@ function EventDesc({ description }) {
 }
 
 function splitScheduleByWeek(schedule) {
+  console.log(schedule);
   function getDateOffset(date, offset) {
     const origTime = date.getTime();
     const newTime = origTime + offset * 24 * 60 * 60 * 1000;
