@@ -92,7 +92,13 @@ function Event({ eventData, currDate }) {
   const eventClasses = `event${isCurrent() ? ' active' : ''}`;
 
   return (
-    <a href={location} className={eventClasses} style={{ flexGrow: timeDiff }}>
+    <a
+      href={location}
+      target="_blank"
+      rel="noreferrer"
+      className={eventClasses}
+      style={{ flexGrow: timeDiff }}
+    >
       <EventTime startTime={startTime} endTime={endTime} />
       <EventDesc description={description} />
     </a>
